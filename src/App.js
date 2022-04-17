@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react'
 
-function App() {
+import Header from "./Components/Header"
+import Question from "./Components/Question"
+import AllAnswers from "./Components/AllAnswers"
+
+const App = () => {
+
+  const [QuestionsAnswers, setQuestionsAnswers] = useState([])
+
+  const getTriviaQuestionsAnswers = async () => {
+    const res = await fetch('https://opentdb.com/api.php?amount=20&type=multiple')
+    const data = res.json()
+
+    return data
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <Header> </Header>
+      <Question question = {question}></Question>
+      <AllAnswers answers = {answers}></AllAnswers>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
