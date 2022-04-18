@@ -1,15 +1,14 @@
 import Answer from "./Answer"
 
-const AllAnswers = ( {answers} ) => {
-  return (
-    <div>
-        <Answer></Answer>
-        <Answer></Answer>
-        <Answer></Answer>
-        <Answer></Answer>
+const AllAnswers = ( {answers, index} ) => {
 
-    </div>
-  )
+    return (
+        <>
+            {answers.map( (a, index) => (
+                <Answer key = {index} answer = {a} ></Answer>
+            ) )} 
+        </>
+    )
 }
 
 export default AllAnswers

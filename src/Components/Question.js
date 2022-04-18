@@ -1,8 +1,11 @@
 
-const Question = ({question}) => {
+const Question = ({questionAnswers, getQuestion, index }) => {
+  
   return (
-    <h3>{question}</h3>
+    <h4>Hello</h4>
   )
 }
 
 export default Question
+
+//{getQuestion(questionAnswers, index)}

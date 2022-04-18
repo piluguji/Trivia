@@ -1,7 +1,7 @@
 
-const Answer = ({answer}) => {
+const Answer = ( {answer} ) => {
   return (
-    <h4>{answer}</h4>
+    <p>{answer}</p>
   )
 }
 
