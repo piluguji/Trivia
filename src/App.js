@@ -7,23 +7,25 @@ import AllAnswers from "./Components/AllAnswers"
 const App = () => {
 
   const [QuestionsAnswers, setQuestionsAnswers] = useState([])
-  const [QuestionNumber, setQuestionNumber] = useState(0)
 
-  useEffect( () => {
-    const getData = async() => {
-      const trivia = await getTriviaQuestionsAnswers()
-      setQuestionsAnswers(trivia)
-      console.log()
-    }
-    getData()
-  }, []) 
-
+  // Gets Trivia Questions (All of Them) from OpenTDB 
   const getTriviaQuestionsAnswers = async () => {
-    const res = await fetch('https://opentdb.com/api.php?amount=20&type=multiple')
+    const res = await fetch('https://opentdb.com/api.php?amount=25&type=multiple')
     const data = res.json()
     return data
   }
 
+
+  //Sets the QuestionsAnswers state to the data
+  useEffect( () => {
+    const getData = async() => {
+      const trivia = await getTriviaQuestionsAnswers()
+      setQuestionsAnswers(trivia)
+    }
+    getData()
+  }, []) 
+
+  //Returns the specific question from the current index we are on
   const getQuestion = (questionAnswers, index) => {
     return questionAnswers.results[index].question
   }
@@ -34,11 +36,11 @@ const App = () => {
     
     const insertingIndex = Math.floor(Math.random() * 5)
     answers.splice(insertingIndex, 0, correctAnswer);
-    return answers
+    return answers   
   }
 
   return (
-    <div className="container">
+    <div className="container"> 
 
       <Header> </Header>
 
