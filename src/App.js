@@ -1,14 +1,37 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, forwardRef } from 'react'
 
 import Header from "./Components/Header"
 import Question from "./Components/Question"
 import AllAnswers from "./Components/AllAnswers"
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+import Button from "@mui/material/Button";
 
 const App = () => {
 
   const [QuestionsAnswers, setQuestionsAnswers] = useState([])
   const [QuestionNumber, setQuestionNumber] = useState(0)
   const [Score, setScore] = useState(0)
+  const [gotCorrect, setGotCorrect] = useState(false)
+
+  //MUI ALERT/TOAST CODE
+  const Alert = forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  })
+  
+  const [open, setOpen] = useState(false);
+  
+  const handleClick = () => {
+    setOpen(true);
+  }
+  
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  }
+  //-----------------
 
   // Gets Trivia Questions (All of Them) from OpenTDB 
   const getTriviaQuestionsAnswers = async () => {
@@ -63,7 +86,11 @@ const App = () => {
     const correctAnswer = getCorrectAnswer(QuestionNumber)
     if(answer === correctAnswer){
       setScore(Score + 1)
+      setGotCorrect(true)
+    }else{
+      setGotCorrect(false)
     }
+    handleClick()
     setQuestionNumber(QuestionNumber + 1)
     checkIfOver()
   }
@@ -74,12 +101,14 @@ const App = () => {
       //TODO: How to End Game? 
     }
   }
-  
-
 
   return (
-    <div className="container"> 
-      
+    <div className="container">
+      <Snackbar open={open} autoHideDuration={1500} onClose={handleClose}>
+        <Alert severity={gotCorrect ? "success" : "error"} sx={{ width: "100%" }}>
+          {gotCorrect ? "Correct!" : "Incorrect!"}
+        </Alert>
+      </Snackbar>
       <Header          
         score = {Score}
         totalQuestions = {QuestionNumber}> </Header>
