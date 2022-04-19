@@ -1,10 +1,14 @@
 import Answer from "./Answer"
 
-const AllAnswers = ( {questionAnswers, getAnswers, index} ) => {
+const AllAnswers = ( {questionAnswers, getAnswers, clickChoice, index} ) => {
     return (
         <>
             {(getAnswers(questionAnswers, index)).map( (a, index) => (
-                <Answer key = {index} answer = {a} ></Answer>
+                <Answer 
+                    key = {index} 
+                    clickChoice = {clickChoice} 
+                    answer = {a} >
+                </Answer>
             ) )} 
         </>
     )

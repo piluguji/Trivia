@@ -7,6 +7,8 @@ import AllAnswers from "./Components/AllAnswers"
 const App = () => {
 
   const [QuestionsAnswers, setQuestionsAnswers] = useState([])
+  const [QuestionNumber, setQuestionNumber] = useState(0)
+  const [Score, setScore] = useState(0)
 
   // Gets Trivia Questions (All of Them) from OpenTDB 
   const getTriviaQuestionsAnswers = async () => {
@@ -34,17 +36,17 @@ const App = () => {
     return ""
   } 
  
+  const getCorrectAnswer = (index) => {
+    return QuestionsAnswers.results[index].correct_answer
+  }
+
   //Creates Answer Array that Randomly Puts The Correct Answer within the Wrong Answers
   const getAnswers = (questionAnswers, index) => {
     if(questionAnswers.length !== 0 ){
       //Get correct answer and all wrong answers
 
       const answers = questionAnswers.results[index].incorrect_answers
-      const correctAnswer = questionAnswers.results[index].correct_answer
-
-      //Weird Behavior
-      console.log(answers, correctAnswer)
-      console.log(questionAnswers) 
+      const correctAnswer = getCorrectAnswer(index)
       
       //Combine them so that correct answer is randomly inserted 
       const insertingIndex = Math.floor(Math.random() * 5)
@@ -57,8 +59,13 @@ const App = () => {
   }
 
   //Once you Click an Answer
-  const clickChoice = () => {
-    console.log("I was clicked")  
+  const clickChoice = (answer) => {
+    const correctAnswer = getCorrectAnswer(QuestionNumber)
+    if(answer === correctAnswer){
+      setScore(Score + 1)
+    }
+    setQuestionNumber(QuestionNumber + 1)
+    console.log(Score, QuestionNumber)
   }
 
 
@@ -71,13 +78,14 @@ const App = () => {
         <Question
         questionAnswers = {QuestionsAnswers}
         getQuestion = {getQuestion} 
-        index = {0}>
+        index = {QuestionNumber}>
       </Question>
 
       <AllAnswers
         questionAnswers = {QuestionsAnswers}
-        getAnswers = {getAnswers} 
-        index = {0} >
+        getAnswers = {getAnswers}
+        clickChoice = {clickChoice} 
+        index = {QuestionNumber} >
       </AllAnswers>
       </>)
       }
