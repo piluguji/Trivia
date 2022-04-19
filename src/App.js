@@ -65,14 +65,24 @@ const App = () => {
       setScore(Score + 1)
     }
     setQuestionNumber(QuestionNumber + 1)
-    console.log(Score, QuestionNumber)
+    checkIfOver()
   }
+
+  //check if out of questions
+  const checkIfOver = () => {
+    if(QuestionNumber === QuestionsAnswers.results.length - 1){
+      //TODO: How to End Game? 
+    }
+  }
+  
 
 
   return (
     <div className="container"> 
       
-      <Header> </Header>
+      <Header          
+        score = {Score}
+        totalQuestions = {QuestionNumber}> </Header>
       {QuestionsAnswers && ( 
         <>
         <Question

@@ -1,10 +1,15 @@
+import ScoreDisplay from "./ScoreDisplay"
 
-
-const Header = () => {
+const Header = ( {score, totalQuestions} ) => {
   return (
-    <header className = 'header'>
-        <h1>TRIVIA</h1>
-    </header>
+    <div className = 'header'>
+        <h1 className = 'triviaTitle'>TRIVIA</h1>
+        <ScoreDisplay
+          score = {score}
+          totalQuestions = {totalQuestions}>
+        </ScoreDisplay>
+
+    </div>
   )
 }
 
