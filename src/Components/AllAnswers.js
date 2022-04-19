@@ -1,10 +1,9 @@
 import Answer from "./Answer"
 
-const AllAnswers = ( {answers, index} ) => {
-
+const AllAnswers = ( {questionAnswers, getAnswers, index} ) => {
     return (
         <>
-            {answers.map( (a, index) => (
+            {(getAnswers(questionAnswers, index)).map( (a, index) => (
                 <Answer key = {index} answer = {a} ></Answer>
             ) )} 
         </>

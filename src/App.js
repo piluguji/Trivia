@@ -27,22 +27,67 @@ const App = () => {
 
   //Returns the specific question from the current index we are on
   const getQuestion = (questionAnswers, index) => {
-    return questionAnswers.results[index].question
+    if(questionAnswers.length !== 0){
+      //console.log(questionAnswers)
+      return questionAnswers.results[index].question
+    }
+    return ""
+  } 
+ 
+  //Creates Answer Array that Randomly Puts The Correct Answer within the Wrong Answers
+  const getAnswers = (questionAnswers, index) => {
+    if(questionAnswers.length !== 0 ){
+      //Get correct answer and all wrong answers
+
+      const answers = questionAnswers.results[index].incorrect_answers
+      const correctAnswer = questionAnswers.results[index].correct_answer
+
+      //Weird Behavior
+      console.log(answers, correctAnswer)
+      console.log(questionAnswers) 
+      
+      //Combine them so that correct answer is randomly inserted 
+      const insertingIndex = Math.floor(Math.random() * 5)
+      if(answers.length === 3){
+        answers.splice(insertingIndex, 0, correctAnswer);
+      }
+      return answers
+    }
+    return []
   }
 
-  const getAnswers = (index) => {
-    const answers = QuestionsAnswers.results[index].incorrect_answers
-    const correctAnswer = QuestionsAnswers.results[index].correct_answer
-    
-    const insertingIndex = Math.floor(Math.random() * 5)
-    answers.splice(insertingIndex, 0, correctAnswer);
-    return answers   
+  //Once you Click an Answer
+  const clickChoice = () => {
+    console.log("I was clicked")  
   }
+
 
   return (
     <div className="container"> 
-
+      
       <Header> </Header>
+      {QuestionsAnswers && ( 
+        <>
+        <Question
+        questionAnswers = {QuestionsAnswers}
+        getQuestion = {getQuestion} 
+        index = {0}>
+      </Question>
+
+      <AllAnswers
+        questionAnswers = {QuestionsAnswers}
+        getAnswers = {getAnswers} 
+        index = {0} >
+      </AllAnswers>
+      </>)
+      }
+    </div>
+  )
+}
+
+export default App
+
+/*
 
       <Question
         questionAnswers = {QuestionsAnswers}
@@ -51,12 +96,9 @@ const App = () => {
       </Question>
 
       <AllAnswers
-        answers = {["2", "34", "5", "6"]} 
+        questionAnswers = {QuestionsAnswers}
+        getAnswers = {getAnswers} 
         index = {0} >
       </AllAnswers>
 
-    </div>
-  )
-}
-
-export default App
+*/

@@ -1,7 +1,10 @@
 
-const Answer = ( {answer} ) => {
+const Answer = ( {answer, clickChoice} ) => {
   return (
-    <p>{answer}</p>
+    <p 
+        className = 'answer' onClick = {clickChoice}>
+        {answer}
+    </p>
   )
 }
 
