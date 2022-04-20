@@ -49,3 +49,11 @@ body {
 .answer:hover{
   background-color: #d5f7dc;
 }
+
+.playAgain-container{
+  text-align: center;
+}
+
+.playAgain{
+  margin: 50px;
+}

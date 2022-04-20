@@ -5,6 +5,7 @@ import Question from "./Components/Question"
 import AllAnswers from "./Components/AllAnswers"
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import Button from '@mui/material/Button';
 
 const App = () => {
 
@@ -12,10 +13,11 @@ const App = () => {
   const [QuestionNumber, setQuestionNumber] = useState(0)
   const [Score, setScore] = useState(0)
   const [gotCorrect, setGotCorrect] = useState(false)
+  const [gameOver, setGameOver] = useState(false)
 
   //MUI ALERT/TOAST CODE
   const Alert = forwardRef(function Alert(props, ref) {
-    return <MuiAlert elevation={90} ref={ref} variant="filled" {...props} />;
+    return <MuiAlert elevation={12} ref={ref} variant="filled" {...props} />;
   })
 
   const [open, setOpen] = useState(false);
@@ -47,7 +49,7 @@ const App = () => {
       setQuestionsAnswers(trivia)
     }
     getData()
-  }, [])
+  }, [gameOver])
 
   //Returns the specific question from the current index we are on
   const getQuestion = (questionAnswers, index) => {
@@ -97,10 +99,17 @@ const App = () => {
   //check if out of questions
   const checkIfOver = () => {
     if (QuestionNumber === QuestionsAnswers.results.length - 1) {
-      //TODO: How to End Game? 
+      setGameOver(true)
     }
   }
 
+  const over = () => {
+    setGameOver(false)
+    setGotCorrect(false)
+    setQuestionNumber(0)
+    setScore(0)
+  }
+  
   return (
     <div className="container">
       <Snackbar open={open} autoHideDuration={1500} onClose={handleClose}>
@@ -111,7 +120,7 @@ const App = () => {
       <Header
         score={Score}
         totalQuestions={QuestionNumber}> </Header>
-      {QuestionsAnswers && (
+      {(QuestionsAnswers && !gameOver) ? (
         <>
           <Question
             questionAnswers={QuestionsAnswers}
@@ -126,6 +135,12 @@ const App = () => {
             index={QuestionNumber} >
           </AllAnswers>
         </>)
+        : (
+          <div className="playAgain-container">
+            <h2 className = 'playAgain'>GAME OVER</h2>
+            <Button variant = "outlined" onClick={() => {over()}}>Play Again?</Button>
+          </div>
+        )
       }
     </div>
   )
